@@ -87,3 +87,24 @@
 (use-package! odin-mode
   :mode "\\.odin\\'"
   :hook (odin-mode . lsp))
+
+;; Enable typescript-mode for .ts and .tsx files
+(use-package! typescript-mode
+  :mode ("\\.ts\\'" . typescript-mode)
+  :hook (typescript-mode . lsp) ; Enable lsp-mode automatically in typescript-mode
+  :config
+  (setq typescript-indent-level 2)) ; Set indentation level to 2 spaces
+
+;; Optional: Configure tide-mode as fallback or complementary tool for TypeScript
+(use-package! tide
+  :after typescript-mode
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save)))
+
+;; Optional: Enable lsp-mode for .tsx files (TypeScript JSX)
+(use-package! web-mode
+  :mode ("\\.tsx\\'" . web-mode)
+  :hook (web-mode . (lambda ()
+                      (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                        (lsp)))))
