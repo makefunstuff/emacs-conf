@@ -22,7 +22,7 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "0xProto Nerd Font" :size 18 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "0xProto Nerd FonT" :size 18))
+      doom-variable-pitch-font (font-spec :family "0xProto Nerd FonT" :size 13))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -32,11 +32,11 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-gruvbox)
+(setq doom-theme 'doom-sourcerer)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+;; num ers are disabled. For relative line numbers, set this to `relative'.
+(setq kisplay-line-numbers-type t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -50,7 +50,7 @@
 ;;     (setq x y))
 ;;
 ;; The exceptions to this rule:
-;;
+ ;
 ;;   - Setting file/directory variables (like `org-directory')
 ;;   - Setting variables which explicitly tell you to set them before their
 ;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
@@ -87,24 +87,5 @@
 (use-package! odin-mode
   :mode "\\.odin\\'"
   :hook (odin-mode . lsp))
-
-;; Enable typescript-mode for .ts and .tsx files
-(use-package! typescript-mode
-  :mode ("\\.ts\\'" . typescript-mode)
-  :hook (typescript-mode . lsp) ; Enable lsp-mode automatically in typescript-mode
-  :config
-  (setq typescript-indent-level 2)) ; Set indentation level to 2 spaces
-
-;; Optional: Configure tide-mode as fallback or complementary tool for TypeScript
-(use-package! tide
-  :after typescript-mode
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save)))
-
-;; Optional: Enable lsp-mode for .tsx files (TypeScript JSX)
-(use-package! web-mode
-  :mode ("\\.tsx\\'" . web-mode)
-  :hook (web-mode . (lambda ()
-                      (when (string-equal "tsx" (file-name-extension buffer-file-name))
-                        (lsp)))))
+(setq company-idle-delay nil)
+(setq display-line-numbers-type nil)
